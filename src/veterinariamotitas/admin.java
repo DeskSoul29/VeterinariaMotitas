@@ -11,10 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 
 public class admin extends JFrame {
     
@@ -105,7 +103,7 @@ public class admin extends JFrame {
         
         boton1.addActionListener( new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                historialFrame alumn = new historialFrame();
+                historialVisitas alumn = new historialVisitas();
                 alumn.setVisible(true);
                 dispose();            
             }
@@ -129,6 +127,15 @@ public class admin extends JFrame {
         boton2.setIcon(new ImageIcon(factura.getImage().getScaledInstance(150, 150,Image.SCALE_SMOOTH)));
         panel.add(boton2);
        
+        boton2.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                factura alumn = new factura();
+                alumn.setVisible(true);
+                dispose();            
+            }
+        });
+        
+        
         //Historia Clinica       
         JLabel text4=new JLabel();
         text4.setText("Historia Clinica");
@@ -149,7 +156,7 @@ public class admin extends JFrame {
         
         boton4.addActionListener( new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                registroM alumn = new registroM();
+                historiaClinica alumn = new historiaClinica();
                 alumn.setVisible(true);
                 dispose();            
             }

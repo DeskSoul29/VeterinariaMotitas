@@ -1,10 +1,13 @@
 package veterinariamotitas;
 
+import Conexion.Conectar;
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +27,13 @@ public class registroP extends JFrame {
         main();
     }
     
+    public void cerrar(){
+          menuPrincipal alumn = new menuPrincipal();
+          alumn.setVisible(true);
+          dispose();
+    }
+    
+       
     public void main(){
         this.setSize(800,600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -124,9 +134,7 @@ public class registroP extends JFrame {
         
         boton1.addActionListener( new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                menuPrincipal alumn = new menuPrincipal();
-                alumn.setVisible(true);
-                dispose();
+                 cerrar();
             }
         });
         
@@ -134,17 +142,39 @@ public class registroP extends JFrame {
         ActionListener oyente = new ActionListener(){
            @Override
             public void actionPerformed(ActionEvent ae) {
+                 
+               Conectar conecta = new Conectar();
+               Connection con = (Connection) conecta.getConexion();
+               
                String numero1=caja.getText();
                String numero2=caja1.getText();
                String numero3=caja2.getText();
                String numero4=caja3.getText();
-//               String numero5=caja4.getText();
               
               
               if(numero1.equalsIgnoreCase("") || numero2.equalsIgnoreCase("") || numero3.equalsIgnoreCase("") || numero4.equalsIgnoreCase("") ){
-                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos");
+                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos", "Error", JOptionPane.WARNING_MESSAGE);
+              }else if(numero1.length() <= 9 || numero1.length() > 10){
+                   JOptionPane.showMessageDialog(null, "Identificacion fuera de rango", "Error", JOptionPane.WARNING_MESSAGE);
+              }else if(numero3.length() <= 9 || numero3.length() > 10){
+                   JOptionPane.showMessageDialog(null, "Telefono fuera de rango", "Error", JOptionPane.WARNING_MESSAGE);
               }else{
-                  
+                   try{
+                         PreparedStatement ps = con.prepareStatement("INSERT INTO cliente (id_clien, nombre_clien, telefono, direccion) VALUES (?,?,?,?)");
+                         ps.setString(1, numero1);
+                         ps.setString(2, numero2);
+                         ps.setString(3, numero3);
+                         ps.setString(4, numero4);
+
+                         ps.executeUpdate();
+                         
+                         JOptionPane.showMessageDialog(null, "Agregado Correctamente");
+                         
+                         cerrar();
+                     }catch (Exception e){
+                          System.out.println("Error al insertar ,"+e);
+
+                     }
               }
                 
             

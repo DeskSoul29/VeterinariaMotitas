@@ -1,10 +1,13 @@
 package veterinariamotitas;
 
+import Conexion.Conectar;
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,11 +20,13 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class registroM extends JFrame{
      
+    public static JTextField caja3 = new JTextField();
+     
     public registroM(){
         this.setLocationRelativeTo(null); 
         main();
     }
-
+    
     public void main() {
         this.setSize(800,600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -92,7 +97,7 @@ public class registroM extends JFrame{
         text4.setFont(new Font("Broadway",Font.BOLD,20));
         panel.add(text4);
         
-        JTextField caja3 = new JTextField();
+        
         caja3.setBounds(250,260,260,40);
         caja3.setFont(new Font("Broadway",Font.BOLD,15));
         caja3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
@@ -106,18 +111,15 @@ public class registroM extends JFrame{
         botonS.setFont(new Font("Broadway",Font.BOLD,15));
         panel.add(botonS);
         
-//        botonS.addActionListener( new ActionListener(){
-//            public void actionPerformed(ActionEvent e){
-//                caja3.setText("");
-//                menuPrincipal alumn = new menuPrincipal();
-//                alumn.setVisible(true);
-//                dispose();
-//            }
-//        });
+        botonS.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                caja3.setText("");
+                macotaSuperior alumn = new macotaSuperior();
+                alumn.setVisible(true);
+            }
+        });
               
-     
-        
-        
+ 
         JButton boton=new JButton();
         boton.setText("Registrar");
         boton.setBounds(500, 400, 130, 30);
@@ -149,17 +151,37 @@ public class registroM extends JFrame{
         ActionListener oyente = new ActionListener(){
            @Override
             public void actionPerformed(ActionEvent ae) {
+               
+               Conectar conecta = new Conectar();
+               Connection con = (Connection) conecta.getConexion();
+               
                String numero1=caja.getText();
                String numero2=caja1.getText();
                String numero3=caja2.getText();
                String numero4=caja3.getText();
-//               String numero5=caja4.getText();
               
               
               if(numero1.equalsIgnoreCase("") || numero2.equalsIgnoreCase("") || numero3.equalsIgnoreCase("") || numero4.equalsIgnoreCase("") ){
-                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos");
+                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos", "Error", JOptionPane.WARNING_MESSAGE);
               }else{
-                  
+                   try{
+                         PreparedStatement ps = con.prepareStatement("INSERT INTO mascota (nombre_masc, especie, raza, id_prop) VALUES (?,?,?,?)");
+                         ps.setString(1, numero1);
+                         ps.setString(2, numero2);
+                         ps.setString(3, numero3);
+                         ps.setString(4, numero4);
+
+                         ps.executeUpdate();
+                         
+                         JOptionPane.showMessageDialog(null, "Agregado Correctamente");
+                         menuPrincipal alumn = new menuPrincipal();
+                         alumn.setVisible(true);
+                         dispose();
+
+                     }catch (Exception e){
+                          System.out.println("Error al insertar, "+e);
+
+                     }
               }
                 
             

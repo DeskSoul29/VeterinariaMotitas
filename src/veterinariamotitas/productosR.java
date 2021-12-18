@@ -1,10 +1,13 @@
 package veterinariamotitas;
 
+import Conexion.Conectar;
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -102,15 +105,31 @@ public class productosR extends JFrame {
         ActionListener oyente = new ActionListener(){
            @Override
             public void actionPerformed(ActionEvent ae) {
+               Conectar conecta = new Conectar();
+               Connection con = (Connection) conecta.getConexion();
+               
                String numero1=caja.getText();
                String numero2=caja1.getText();
 
               
               
               if(numero1.equalsIgnoreCase("") || numero2.equalsIgnoreCase("")){
-                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos");
-              }else{
-                  
+                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos", "Error", JOptionPane.WARNING_MESSAGE);
+              }else {
+                   try{
+                         PreparedStatement ps = con.prepareStatement("INSERT INTO producto (nombre_prod, precio_prod) VALUES (?,?)");
+                         ps.setString(1, numero1);
+                         ps.setString(2, numero2);
+
+                         ps.executeUpdate();
+                         
+                         JOptionPane.showMessageDialog(null, "Agregado Correctamente");
+                         caja.setText("");
+                         caja1.setText("");
+                     }catch (Exception e){
+                          System.out.println("Error al insertar ,"+e);
+
+                     }
               }
                 
             

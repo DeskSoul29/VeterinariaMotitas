@@ -1,13 +1,17 @@
 package veterinariamotitas;
 
+import Conexion.Conectar;
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
@@ -15,7 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class serviciosR extends JFrame{
+public class serviciosR extends JFrame {
     
     public serviciosR(){
         this.setLocationRelativeTo(null); 
@@ -77,13 +81,15 @@ public class serviciosR extends JFrame{
         text3.setFont(new Font("Broadway",Font.BOLD,20));
         panel.add(text3);
         
-        JTextField caja2 = new JTextField();
-        caja2.setBounds(250,210,260,40);
+        String country[]={"Area Médica","Area Estética"};        
+        JComboBox caja2=new JComboBox(country);    
+        caja2.setBounds(250,210,260,40); 
         caja2.setFont(new Font("Broadway",Font.BOLD,15));
         caja2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,1));
         caja2.setBackground(Color.WHITE);
         panel.add(caja2);
-
+        
+        
         
         JButton boton=new JButton();
         boton.setText("Registrar");
@@ -115,16 +121,33 @@ public class serviciosR extends JFrame{
         ActionListener oyente = new ActionListener(){
            @Override
             public void actionPerformed(ActionEvent ae) {
+               Conectar conecta = new Conectar();
+               Connection con = (Connection) conecta.getConexion();
+               
                String numero1=caja.getText();
                String numero2=caja1.getText();
-               String numero3=caja2.getText();
+               String numero3 = (String) caja2.getItemAt(caja2.getSelectedIndex());
+              
+              
+              if(numero1.equalsIgnoreCase("") || numero2.equalsIgnoreCase("")){
+                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos", "Error", JOptionPane.WARNING_MESSAGE);
+              }else {
+                   try{
+                         PreparedStatement ps = con.prepareStatement("INSERT INTO servicio (nombre_serv, precio_serv, area_serv) VALUES (?,?,?)");
+                         ps.setString(1, numero1);
+                         ps.setString(2, numero2);
+                         ps.setString(3, numero3);
 
-              
-              
-              if(numero1.equalsIgnoreCase("") || numero2.equalsIgnoreCase("") || numero3.equalsIgnoreCase("") ){
-                  JOptionPane.showMessageDialog(null, "Debe diligenciar todos los datos");
-              }else{
-                  
+
+                         ps.executeUpdate();
+                        
+                         JOptionPane.showMessageDialog(null, "Agregado Correctamente");
+                         caja.setText("");
+                         caja1.setText("");
+                     }catch (Exception e){
+                          System.out.println("Error al insertar ,"+e);
+
+                     }
               }
                 
             

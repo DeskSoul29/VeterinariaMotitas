@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/src/veterinariamotitas/registroM.java</file>
-            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/src/veterinariamotitas/admin.java</file>
-            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/src/veterinariamotitas/factura.java</file>
-            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/src/veterinariamotitas/historialFrame.java</file>
-            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/src/veterinariamotitas/newVisit.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/nuevaConsulta.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/newFactura.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/registroM.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/newVisit.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/macotaSuperior.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/historialVisitas.java</file>
+            <file>file:/C:/Users/jhann/Downloads/Veterinaria%20Motitas/VeterinariaMotitas/src/veterinariamotitas/factura.java</file>
         </group>
     </open-files>
 </project-private>
